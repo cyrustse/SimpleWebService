@@ -31,7 +31,11 @@ async  fn get_user(
     let db = db.lock().unwrap();
 
     match db.get(&user_id) {
-        Some(user_data) => Ok(HttpResponse::Ok().json(user_data)),
+        // Some(user_data) => Ok(HttpResponse::Ok().json(user_data)),
+        Some(user_data) => Ok(HttpResponse::Ok().json(CreateUserResponse{
+            id: user_id,
+            name: user_data.name.clone(),
+        })),
         None => Err(ErrorNotFound("User not found")),
     }
 }
